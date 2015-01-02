@@ -36,6 +36,8 @@ import java.util.Date;
  */
 public class ForecastFragment extends Fragment {
 
+    ArrayAdapter<String> mForecastAdapter;
+
     public ForecastFragment() {
     }
 
@@ -63,7 +65,7 @@ public class ForecastFragment extends Fragment {
 
         if (id == R.id.action_refresh) {
             FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("542309");
+            weatherTask.execute("1000");
             return true;
         }
 
@@ -254,19 +256,28 @@ public class ForecastFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String[] result) {
+            if ( result == null){
+                return;
+            }
 
             List<String> weekForecast = new ArrayList<String>(Arrays.asList(result));
 
-            ArrayAdapter<String> forecastAdapter = new ArrayAdapter<String>(
-                            getActivity(), // The current context (this activity)
-                            R.layout.list_item_forecast, // The name of the layout ID.
-                            R.id.list_item_forecast_textview, // The ID of the textview to populate.
-                            weekForecast);
+            if ( mForecastAdapter == null ) {
+                mForecastAdapter = new ArrayAdapter<String>(
+                        getActivity(), // The current context (this activity)
+                        R.layout.list_item_forecast, // The name of the layout ID.
+                        R.id.list_item_forecast_textview, // The ID of the textview to populate.
+                        weekForecast);
 
-            ListView myListView = (ListView) rootView.findViewById(R.id.listview_forecast);
-            myListView.setAdapter(forecastAdapter);
-
-
+                ListView myListView = (ListView) rootView.findViewById(R.id.listview_forecast);
+                myListView.setAdapter(mForecastAdapter);
+            }
+            else {
+                mForecastAdapter.clear();
+                for ( String dayForecastStr : result ){
+                    mForecastAdapter.add(dayForecastStr);
+                }
+            }
         }
     }
 }
