@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
+    public final static String EXTRA_MESSAGE_SELECTEDFORECAST = "EXTRA_MESSAGE_SELECTEDFORECAST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

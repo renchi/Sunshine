@@ -1,6 +1,7 @@
 package com.example.chitoborabien.sunshine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,6 +90,7 @@ public class ForecastFragment extends Fragment {
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
+
 
         /* The date/time conversion code is going to be moved outside the asynctask later,
          * so for convenience we're breaking it out into its own method now.
@@ -274,14 +275,22 @@ public class ForecastFragment extends Fragment {
 
                 ListView myListView = (ListView) rootView.findViewById(R.id.listview_forecast);
                 myListView.setAdapter(mForecastAdapter);
+
                 myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        /*
                         Context context = getActivity();
                         CharSequence text = mForecastAdapter.getItem(i);
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+                        */
+                        String selectedDayForecast = mForecastAdapter.getItem(position);
+                        Context context = getActivity();
+                        Intent detailsIntent = new Intent(context, DetailActivity.class);
+                        detailsIntent.putExtra(MainActivity.EXTRA_MESSAGE_SELECTEDFORECAST, selectedDayForecast);
+                        startActivity(detailsIntent);
                     }
                 });
             }
