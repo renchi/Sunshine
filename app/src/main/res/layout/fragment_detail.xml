@@ -1,0 +1,162 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.chitoborabien.sunshine.DetailActivity$PlaceholderFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Today"
+        android:id="@+id/textDay"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/black"
+        android:textSize="24dp"
+        android:typeface="serif" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="June 18"
+        android:id="@+id/textDate"
+        android:textColor="#ff646464"
+        android:textSize="16dp"
+        android:typeface="serif"
+        android:layout_above="@+id/imageView"
+        android:layout_alignLeft="@+id/textDay"
+        android:layout_alignStart="@+id/textDay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="22"
+        android:id="@+id/textMax"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="63dp"
+        android:textColor="@android:color/black"
+        android:textSize="96dp"
+        android:typeface="serif"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginStart="27dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12"
+        android:id="@+id/textMin"
+        android:textColor="#ff646464"
+        android:textSize="48dp"
+        android:typeface="serif"
+        android:layout_below="@+id/textMax"
+        android:layout_alignRight="@+id/textMax"
+        android:layout_alignEnd="@+id/textMax" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_alignTop="@+id/textMax"
+        android:layout_toRightOf="@+id/textMax"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="27dp"
+        android:background="#ffff9136"
+        android:src="@android:drawable/star_on"
+        android:layout_alignBottom="@+id/textMax" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:id="@+id/textDescription"
+        android:textColor="#ff646464"
+        android:textSize="22dp"
+        android:typeface="serif"
+        android:layout_alignBaseline="@+id/textMin"
+        android:layout_alignBottom="@+id/textMin"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
+        android:focusable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Humidity: "
+        android:id="@+id/textHumidity"
+        android:textColor="#ff646464"
+        android:textSize="22dp"
+        android:typeface="serif"
+        android:layout_marginTop="56dp"
+        android:layout_below="@+id/textMin"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pressure: "
+        android:id="@+id/textPressure"
+        android:textColor="#ff646464"
+        android:textSize="22dp"
+        android:typeface="serif"
+        android:layout_below="@+id/textHumidity"
+        android:layout_alignRight="@+id/textHumidity"
+        android:layout_alignEnd="@+id/textHumidity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wind: "
+        android:id="@+id/textWind"
+        android:textColor="#ff646464"
+        android:textSize="22dp"
+        android:typeface="serif"
+        android:layout_below="@+id/textPressure"
+        android:layout_alignLeft="@+id/textPressure"
+        android:layout_alignStart="@+id/textPressure" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="71 %"
+        android:id="@+id/textHumidityValue"
+        android:textColor="#ff646464"
+        android:textSize="22dp"
+        android:typeface="serif"
+        android:layout_alignTop="@+id/textHumidity"
+        android:layout_toRightOf="@+id/textPressure"
+        android:layout_toEndOf="@+id/textPressure" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1016 hPa"
+        android:id="@+id/textPressureValue"
+        android:textColor="#ff646464"
+        android:textSize="22dp"
+        android:typeface="serif"
+        android:layout_alignBottom="@+id/textPressure"
+        android:layout_alignLeft="@+id/textHumidityValue"
+        android:layout_alignStart="@+id/textHumidityValue" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2 km/h NW"
+        android:id="@+id/textWindValue"
+        android:textColor="#ff646464"
+        android:textSize="22dp"
+        android:typeface="serif"
+        android:layout_alignBottom="@+id/textWind"
+        android:layout_toRightOf="@+id/textWind"
+        android:layout_toEndOf="@+id/textWind" />
+
+</RelativeLayout>
