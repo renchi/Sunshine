@@ -31,9 +31,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -69,11 +67,7 @@ public class ForecastFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.action_refresh) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String location = prefs.getString(getString(R.string.pref_location_key),
-                    getString(R.string.pref_location_default));
-            weatherTask.execute(location);
+            UpdateWeather();
             return true;
         }
 
@@ -83,15 +77,53 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mForecastAdapter = new ArrayAdapter<String>(
+                getActivity(), // The current context (this activity)
+                R.layout.list_item_forecast, // The name of the layout ID.
+                R.id.list_item_forecast_textview, // The ID of the textview to populate.
+                new ArrayList<String>());
+
         rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        ListView myListView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        myListView.setAdapter(mForecastAdapter);
+
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    /*
+                    Context context = getActivity();
+                    CharSequence text = mForecastAdapter.getItem(i);
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    */
+                String selectedDayForecast = mForecastAdapter.getItem(position);
+                Context context = getActivity();
+                Intent detailsIntent = new Intent(context, DetailActivity.class);
+                detailsIntent.putExtra(MainActivity.EXTRA_MESSAGE_SELECTEDFORECAST, selectedDayForecast);
+                startActivity(detailsIntent);
+            }
+        });
+
+        UpdateWeather();
+
+        return rootView;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        UpdateWeather();
+    }
+
+    private void UpdateWeather(){
         FetchWeatherTask weatherTask = new FetchWeatherTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String location = prefs.getString(getString(R.string.pref_location_key),
                 getString(R.string.pref_location_default));
         weatherTask.execute(location);
-
-        return rootView;
     }
 
 
@@ -268,41 +300,8 @@ public class ForecastFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String[] result) {
-            if ( result == null){
-                return;
-            }
+            if ( result != null){
 
-            List<String> weekForecast = new ArrayList<String>(Arrays.asList(result));
-
-            if ( mForecastAdapter == null ) {
-                mForecastAdapter = new ArrayAdapter<String>(
-                        getActivity(), // The current context (this activity)
-                        R.layout.list_item_forecast, // The name of the layout ID.
-                        R.id.list_item_forecast_textview, // The ID of the textview to populate.
-                        weekForecast);
-
-                ListView myListView = (ListView) rootView.findViewById(R.id.listview_forecast);
-                myListView.setAdapter(mForecastAdapter);
-
-                myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        /*
-                        Context context = getActivity();
-                        CharSequence text = mForecastAdapter.getItem(i);
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                        */
-                        String selectedDayForecast = mForecastAdapter.getItem(position);
-                        Context context = getActivity();
-                        Intent detailsIntent = new Intent(context, DetailActivity.class);
-                        detailsIntent.putExtra(MainActivity.EXTRA_MESSAGE_SELECTEDFORECAST, selectedDayForecast);
-                        startActivity(detailsIntent);
-                    }
-                });
-            }
-            else {
                 mForecastAdapter.clear();
                 for ( String dayForecastStr : result ){
                     mForecastAdapter.add(dayForecastStr);
